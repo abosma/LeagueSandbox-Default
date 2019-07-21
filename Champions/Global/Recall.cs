@@ -14,7 +14,7 @@ namespace Spells
 
         public void OnFinishCasting(IChampion owner, ISpell spell, IAttackableUnit target)
         {
-            // @TODO Find out if possible to check for champion movement
+            // @TODO Interrupt the script when owner uses movement spells
             owner.AddBuffGameScript("Recall", "Recall", spell, 8.0f, true);
         }
 
@@ -29,22 +29,6 @@ namespace Spells
         public void OnActivate(IChampion owner)
         {
             ApiEventManager.OnChampionDamageTaken.AddListener(this, owner, () =>
-            {
-                if (owner.HasBuffGameScriptActive("Recall", "Recall"))
-                {
-                    ((ObjAiBase)owner).RemoveBuffGameScriptsWithName("Recall", "Recall");
-                }
-            });
-
-            ApiEventManager.OnChampionCrowdControlled.AddListener(this, owner, () =>
-            {
-                if (owner.HasBuffGameScriptActive("Recall", "Recall"))
-                {
-                    ((ObjAiBase)owner).RemoveBuffGameScriptsWithName("Recall", "Recall");
-                }
-            });
-
-            ApiEventManager.OnChampionMove.AddListener(this, owner, () =>
             {
                 if (owner.HasBuffGameScriptActive("Recall", "Recall"))
                 {
